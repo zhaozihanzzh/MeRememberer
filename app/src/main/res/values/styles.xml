@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/primary</item>
         <!-- 状态栏颜色 -->
         <item name="colorPrimaryDark">@color/primaryDark</item>
-        <!-- 返回键样式 -->
+		<item name="android:windowBackground">@android:color/transparent</item>
         <!-- 导航栏颜色-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:navigationBarColor">@color/primaryDark</item>

@@ -11,4 +11,9 @@
 	<string name="copy">Copy</string>
 	<string name="app_crashed">App Crashed!</string>
 	<string name="dark_mode">Dark Mode</string>
+	<string name="log_has_been_copied">Log has been copied to clipboard.</string>
+	<string name="settings_need_reboot">Successfully set up, reboot app to apply.</string>
+	<string name="reboot_now">Reboot right now</string>
+	<string name="drawer_opened">Drawer Opened"</string>
+	<string name="drawer_closed">Drawer Closed</string>
 </resources>

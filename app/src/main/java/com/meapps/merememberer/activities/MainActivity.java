@@ -1,29 +1,62 @@
 package com.meapps.merememberer.activities;
 
-import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.net.*;
 import android.os.*;
 import android.preference.*;
 import android.support.design.widget.*;
+import android.support.v4.view.*;
+import android.support.v4.widget.*;
 import android.support.v7.app.*;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.*;
+import android.widget.AdapterView.*;
 import android.view.*;
 import com.meapps.merememberer.*;
 import java.io.*;
 
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 	private boolean onBackDown = false;
+	private DrawerLayout mDrawerLayout;
+	private ActionBarDrawerToggle mDrawerToggle;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		App.addActivity(this);
         setContentView(R.layout.main);
 		Toolbar toolbar =(Toolbar) findViewById(R.id.main_toolbar);
+		LayoutParams params = toolbar.getLayoutParams();
+		params.height = params.height + (int) getResources().getDimension(R.dimen.tool_bar_padding_top);
+		// We MUST use params.height instead of toolbar.getHeight()!
+		toolbar.setLayoutParams(params);
 		setSupportActionBar(toolbar);
-		App.addActivity(this);
+		
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+		mDrawerToggle = new ActionBarDrawerToggle (this, mDrawerLayout, toolbar, 
+												   R.string.drawer_opened, R.string.drawer_closed) {
+			@Override
+			public void onDrawerOpened(View drawerView)
+			{
+				super.onDrawerOpened(drawerView);
+				return;
+			}
+
+			@Override
+			public void onDrawerClosed(View drawerView)
+			{
+				super.onDrawerClosed(drawerView);
+				return;
+			}
+		};
+		mDrawerToggle.syncState();
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		mDrawerLayout.openDrawer(GravityCompat.START);
+		
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int installedVersion = -1;
 		try {
@@ -40,6 +73,23 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (PackageManager.NameNotFoundException e) {}
 
+		new Thread(){
+			@Override
+			public void run(){
+				try {
+					Thread.sleep(3000);
+					runOnUiThread(new Runnable(){
+							@Override
+							public void run(){
+								if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+									mDrawerLayout.closeDrawer(GravityCompat.START);
+								}
+							}
+						});
+				} catch (InterruptedException e) {}
+			}
+		}.start();
+		
     }
 
 	@Override
@@ -82,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         if(onBackDown){
             App.finishAll();
         }
-        Snackbar.make(getCurrentFocus(), R.string.press_again_to_exit, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getCurrentFocus(), R.string.press_again_to_exit, Snackbar.LENGTH_LONG).show();
         onBackDown = true;
         new Thread(new Runnable(){
             @Override
@@ -96,4 +146,14 @@ public class MainActivity extends AppCompatActivity {
         }).start();
         return false;
     }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				mDrawerLayout.openDrawer(GravityCompat.START);
+				break;
+		}
+		return true;
+	}
 }

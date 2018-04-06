@@ -20,7 +20,7 @@ public class App extends Application implements Thread.UncaughtExceptionHandler 
         return mActivities;
     }
     public static void removeActivity(Activity activity) {     
-        LogUtils.d(mActivities.remove(activity) + "to Destroy activity " + activity);
+        LogUtils.d(mActivities.remove(activity) + " to Destroy activity " + activity);
     }
     public static void finishAll() {
         for (Activity a : mActivities) {
@@ -51,7 +51,6 @@ public class App extends Application implements Thread.UncaughtExceptionHandler 
 		//设置Thread Exception Handler
         Thread.setDefaultUncaughtExceptionHandler(this);
         AppCompatDelegate.setDefaultNightMode(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_mode", false) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-		LogUtils.d(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?"Night Yes":"Night No");
     }
 	@Override
     public void uncaughtException(Thread thread, Throwable ex) {

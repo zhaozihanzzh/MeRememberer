@@ -39,7 +39,7 @@ public final class Crash extends Activity implements View.OnClickListener {
             case R.id.crash_copy:
                 final android.text.ClipboardManager cmb=(android.text.ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
                 cmb.setText(log);
-                Toast.makeText(this, "已将Log复制到剪贴板。", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.log_has_been_copied, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

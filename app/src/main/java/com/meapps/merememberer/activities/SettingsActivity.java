@@ -31,8 +31,8 @@ public final class SettingsActivity extends CompatPreferenceActivity {
         App.removeActivity(this);
     }
     private void rebootToWork(){
-        Snackbar.make(getListView(), "设置成功，重启软件后生效。", Snackbar.LENGTH_SHORT)
-                .setAction("立即重启", new View.OnClickListener(){
+        Snackbar.make(getListView(), R.string.settings_need_reboot, Snackbar.LENGTH_SHORT)
+                .setAction(R.string.reboot_now, new View.OnClickListener(){
                 @Override
                 public void onClick(View p1) {
                     Intent intent = new Intent(SettingsActivity.this, MainActivity.class);

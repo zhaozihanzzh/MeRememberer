@@ -2,20 +2,22 @@
 	xmlns:app="http://schemas.android.com/apk/res/app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="top"
-    android:orientation="vertical"
 	android:id="@+id/main_drawerlayout" >
-	<FrameLayout
+	<LinearLayout
 		android:layout_height="match_parent"
-		android:layout_width="match_parent">
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:gravity="top|center_horizontal">
 		<android.support.v7.widget.Toolbar
 			android:id="@+id/main_toolbar"
+			android:elevation="5dp"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			android:background="?attr/colorPrimary"
+			android:paddingTop="@dimen/tool_bar_padding_top"
 			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-	</FrameLayout>
+	</LinearLayout>
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
