@@ -7,9 +7,10 @@ import android.view.*;
 import android.content.*;
 import android.support.v7.app.*;
 
-public final class SettingsActivity extends PreferenceActivity {
+public final class SettingsActivity extends CompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		
         super.onCreate(savedInstanceState);
         App.addActivity(this);
         addPreferencesFromResource(R.xml.settings);

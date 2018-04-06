@@ -6,18 +6,24 @@ import android.content.pm.*;
 import android.net.*;
 import android.os.*;
 import android.preference.*;
+import android.support.design.widget.*;
+import android.support.v7.app.*;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.*;
+import android.view.*;
 import com.meapps.merememberer.*;
 import java.io.*;
 
-public class MainActivity extends Activity {
-	private boolean isDarkMode = false;
-    @Override
+
+public class MainActivity extends AppCompatActivity {
+	private boolean onBackDown = false;
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+		Toolbar toolbar =(Toolbar) findViewById(R.id.main_toolbar);
+		setSupportActionBar(toolbar);
 		App.addActivity(this);
-        isDarkMode = getIntent().getBooleanExtra("dark_mode", isDarkMode);
-        LogUtils.d("Dark:" + isDarkMode);
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int installedVersion = -1;
 		try {
@@ -45,15 +51,15 @@ public class MainActivity extends Activity {
 	private void showAboutDialog() {
         AlertDialog.Builder aboutDialog=new AlertDialog.Builder(this);
         aboutDialog.setCancelable(true).setIcon(R.drawable.ic_launcher)
-            .setTitle("关于").setMessage(R.string.about)
-            .setNeutralButton("源代码", new DialogInterface.OnClickListener(){
+            .setTitle(R.string.about).setMessage(R.string.about_summary)
+            .setNeutralButton(R.string.source_code, new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface p1, int p2) {
                     Uri uri=Uri.parse("https://github.com/zhaozihanzzh/MeRememberer");
                     startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 }
             })
-            .setNegativeButton("好", null).show();
+            .setNegativeButton(android.R.string.ok, null).show();
     }
     private void showChangeLogDialog() {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
@@ -64,8 +70,30 @@ public class MainActivity extends Activity {
             is.read(buffer);
             is.close();
             String result = new String(buffer, "utf8");
-            builder.setTitle("更新日志").setMessage(result).setPositiveButton("好", null).create().show();
+            builder.setTitle(R.string.changelogs).setMessage(result).setPositiveButton(android.R.string.ok, null).create().show();
         } catch (IOException e) {} 
     }
-
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode != KeyEvent.KEYCODE_BACK){
+            return super.onKeyDown(keyCode, event);
+        }
+        if(onBackDown){
+            App.finishAll();
+        }
+        Snackbar.make(getCurrentFocus(), R.string.press_again_to_exit, Snackbar.LENGTH_SHORT).show();
+        onBackDown = true;
+        new Thread(new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    Thread.sleep(3000);
+                    onBackDown = false;
+                    // It seems that we must put onBackDown = false here.
+                 } catch (InterruptedException e) {}
+            }
+        }).start();
+        return false;
+    }
 }

@@ -50,7 +50,8 @@ public class App extends Application implements Thread.UncaughtExceptionHandler 
         super.onCreate();
 		//设置Thread Exception Handler
         Thread.setDefaultUncaughtExceptionHandler(this);
-        AppCompatDelegate.setDefaultNightMode(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_mode", false)?AppCompatDelegate.MODE_NIGHT_YES:AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_mode", false) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+		LogUtils.d(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES?"Night Yes":"Night No");
     }
 	@Override
     public void uncaughtException(Thread thread, Throwable ex) {

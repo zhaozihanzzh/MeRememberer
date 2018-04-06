@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="设置">
+    android:title="@string/settings">
     <CheckBoxPreference
-        android:title="夜间模式"
+        android:title="@string/dark_mode"
         android:key="dark_mode"/>
 </PreferenceScreen>

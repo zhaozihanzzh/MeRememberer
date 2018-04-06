@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
-        android:text="程序崩溃了！"
+        android:text="@string/app_crashed"
         android:textColor="#9E9E9E"
         android:gravity="center_horizontal"/>
 
@@ -46,14 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1.0"
-        android:text="复制"
+        android:text="@string/copy"
         style="?android:attr/buttonBarButtonStyle"
         android:textColor="@color/colorAccent"
         android:id="@+id/crash_copy"/>
     <Button
         android:layout_height="wrap_content"
         android:layout_width="0dp"
-        android:text="关闭"
+        android:text="@*android:string/ok"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_weight="1.0"
         android:textColor="@color/colorAccent"

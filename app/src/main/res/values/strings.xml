@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">MeRememberer</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="settings">Settings</string>
+    <string name="sc_disabled">Disabled Function</string>
+	<string name="about_summary">Can you remember it?</string>
+	<string name="about">About</string>
+	<string name="changelogs">Changelogs</string>
+	<string name="press_again_to_exit">Press Back again to close the application.</string>
+	<string name="source_code">Source Code</string>
+	<string name="copy">Copy</string>
+	<string name="app_crashed">App Crashed!</string>
+	<string name="dark_mode">Dark Mode</string>
 </resources>
