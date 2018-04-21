@@ -10,8 +10,8 @@ import android.support.v4.view.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
-import android.widget.AdapterView.*;
 import android.view.*;
+import android.view.ViewGroup.*;
 import com.meapps.merememberer.*;
 import java.io.*;
 
@@ -31,32 +31,33 @@ public final class MainActivity extends AppCompatActivity {
 		// We MUST use params.height instead of toolbar.getHeight()!
 		toolbar.setLayoutParams(params);
 		setSupportActionBar(toolbar);
-		
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
-		mDrawerToggle = new ActionBarDrawerToggle (this, mDrawerLayout, toolbar, 
-												   R.string.drawer_opened, R.string.drawer_closed) {
+		final boolean[] closedManually = {false};
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, 
+												  R.string.drawer_opened, R.string.drawer_closed) {
 			@Override
-			public void onDrawerOpened(View drawerView)
-			{
+			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
 				return;
 			}
 
 			@Override
-			public void onDrawerClosed(View drawerView)
-			{
+			public void onDrawerClosed(View drawerView) {
 				super.onDrawerClosed(drawerView);
+				closedManually[0] = true;
+				// Make sure that if we close the drawer and open it again in 3 seconds, the drawer won't be closed.
 				return;
 			}
 		};
 		mDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		mDrawerLayout.openDrawer(GravityCompat.START);
-		
+
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int installedVersion = -1;
 		try {
@@ -75,13 +76,13 @@ public final class MainActivity extends AppCompatActivity {
 
 		new Thread(){
 			@Override
-			public void run(){
+			public void run() {
 				try {
 					Thread.sleep(3000);
 					runOnUiThread(new Runnable(){
 							@Override
-							public void run(){
-								if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+							public void run() {
+								if (mDrawerLayout.isDrawerOpen(GravityCompat.START) && ! closedManually[0]) {
 									mDrawerLayout.closeDrawer(GravityCompat.START);
 								}
 							}
@@ -89,15 +90,15 @@ public final class MainActivity extends AppCompatActivity {
 				} catch (InterruptedException e) {}
 			}
 		}.start();
-		
+
     }
 
 	@Override
-	protected void onDestroy(){
+	protected void onDestroy() {
 		super.onDestroy();
 		App.removeActivity(this);
 	}
-	
+
 	private void showAboutDialog() {
         AlertDialog.Builder aboutDialog=new AlertDialog.Builder(this);
         aboutDialog.setCancelable(true).setIcon(R.drawable.ic_launcher)
@@ -123,27 +124,27 @@ public final class MainActivity extends AppCompatActivity {
             builder.setTitle(R.string.changelogs).setMessage(result).setPositiveButton(android.R.string.ok, null).create().show();
         } catch (IOException e) {} 
     }
-    
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode != KeyEvent.KEYCODE_BACK){
+        if (keyCode != KeyEvent.KEYCODE_BACK) {
             return super.onKeyDown(keyCode, event);
         }
-        if(onBackDown){
+        if (onBackDown) {
             App.finishAll();
         }
         Snackbar.make(getCurrentFocus(), R.string.press_again_to_exit, Snackbar.LENGTH_LONG).show();
         onBackDown = true;
         new Thread(new Runnable(){
-            @Override
-            public void run(){
-                try{
-                    Thread.sleep(3000);
-                    onBackDown = false;
-                    // It seems that we must put onBackDown = false here.
-                 } catch (InterruptedException e) {}
-            }
-        }).start();
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(3000);
+						onBackDown = false;
+						// It seems that we must put onBackDown = false here.
+					} catch (InterruptedException e) {}
+				}
+			}).start();
         return false;
     }
 
