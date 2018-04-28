@@ -31,12 +31,41 @@ public final class MainActivity extends AppCompatActivity {
 		// We MUST use params.height instead of toolbar.getHeight()!
 		toolbar.setLayoutParams(params);
 		setSupportActionBar(toolbar);
+		NavigationView navView = (NavigationView) findViewById(R.id.main_nav_view);
+		navView.inflateMenu(R.menu.navigation_menu);
+		navView.inflateHeaderView(R.layout.navigation_header);
+		ViewGroup header = (ViewGroup) navView.getHeaderView(0);
+		header.getChildAt(0).setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View p1) {
+					startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+					mDrawerLayout.closeDrawer(GravityCompat.START);
+				}
+			});
+		header.getChildAt(1).setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View p1) {
+					showAboutDialog();
+					mDrawerLayout.closeDrawer(GravityCompat.START);
+				}
+			});
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+		navView.setCheckedItem(R.id.nav_menu_fill_in_the_blank);
+		navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+				@Override
+				public boolean onNavigationItemSelected(MenuItem menuItem) {
+					mDrawerLayout.closeDrawers();
+					switch (menuItem.getItemId()) {
+
+					}
+					return true;
+				}
+			});
 		final boolean[] closedManually = {false};
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, 
 												  R.string.drawer_opened, R.string.drawer_closed) {
@@ -110,7 +139,13 @@ public final class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 }
             })
-            .setNegativeButton(android.R.string.ok, null).show();
+			.setNegativeButton(R.string.changelogs, new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface p1, int p2) {
+					showChangeLogDialog();
+				}
+			})
+            .setPositiveButton(android.R.string.ok, null).show();
     }
     private void showChangeLogDialog() {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);

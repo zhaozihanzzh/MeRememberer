@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <group android:checkableBehavior="single"> 
+    <item
+        android:id="@+id/nav_menu_fill_in_the_blank"
+        android:title="@string/fill_in_the_blank"
+		android:icon="@drawable/ic_comment"/>
+	<item
+		android:id="@+id/nav_menu_tts"
+		android:title="@string/tts_read"
+		android:icon="@drawable/ic_text_to_speech"/>
+   </group>
+</menu>

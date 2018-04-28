@@ -16,4 +16,6 @@
 	<string name="reboot_now">Reboot right now</string>
 	<string name="drawer_opened">Drawer Opened"</string>
 	<string name="drawer_closed">Drawer Closed</string>
+	<string name="fill_in_the_blank">Fill in the Blank</string>
+	<string name="tts_read">TTS Reading</string>
 </resources>

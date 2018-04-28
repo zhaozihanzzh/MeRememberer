@@ -4,8 +4,10 @@ import android.os.*;
 import com.meapps.merememberer.*;
 import android.support.design.widget.*;
 import android.view.*;
+import android.view.ViewGroup.*;
 import android.content.*;
 import android.support.v7.app.*;
+import android.support.v7.widget.*;
 
 public final class SettingsActivity extends CompatPreferenceActivity {
     @Override
@@ -13,6 +15,13 @@ public final class SettingsActivity extends CompatPreferenceActivity {
 		
         super.onCreate(savedInstanceState);
         App.addActivity(this);
+		setContentView(R.layout.settings);
+		Toolbar toolbar =(Toolbar) findViewById(R.id.settings_toolbar);
+		LayoutParams params = toolbar.getLayoutParams();
+		params.height = params.height + (int) getResources().getDimension(R.dimen.tool_bar_padding_top);
+		// We MUST use params.height instead of toolbar.getHeight()!
+		toolbar.setLayoutParams(params);
+		setSupportActionBar(toolbar);
         addPreferencesFromResource(R.xml.settings);
             final CheckBoxPreference darkMode = (CheckBoxPreference) findPreference("dark_mode");
             darkMode.setOnPreferenceChangeListener(new CheckBoxPreference.OnPreferenceChangeListener(){
@@ -41,4 +50,13 @@ public final class SettingsActivity extends CompatPreferenceActivity {
                 }
         }).show();
     }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

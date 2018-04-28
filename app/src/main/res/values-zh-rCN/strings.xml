@@ -15,4 +15,6 @@
 	<string name="log_has_been_copied">已将Log复制到剪贴板。</string>
 	<string name="settings_need_reboot">设置成功，重启软件后生效。</string>
 	<string name="reboot_now">立即重启</string>
+	<string name="fill_in_the_blank">填空</string>
+	<string name="tts_read">TTS 朗读</string>
 </resources>

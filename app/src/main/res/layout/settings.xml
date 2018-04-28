@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-app"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:gravity="top|center_horizontal">
+
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/settings_toolbar"
+		android:elevation="5dp"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="?attr/colorPrimary"
+		android:paddingTop="@dimen/tool_bar_padding_top"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+	<ListView
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:id="@*android:id/list"/>
+</LinearLayout>
